@@ -1,6 +1,7 @@
 import { pool } from "./index.js";
 import { seedData } from "./seed-data.js";
 
+// creating table of users, id = primary key , username is string max 30 chars
 export async function createUsersTable() {
   return await pool.query(
     `CREATE TABLE IF NOT EXISTS users (
@@ -9,11 +10,11 @@ export async function createUsersTable() {
     );`
   );
 }
-
+// deletes user table
 export async function dropUsersTable() {
   return await pool.query("DROP TABLE IF EXISTS users;");
 }
-
+// populateUsersTable
 export async function populateUsersTable(data) {
   return await pool.query(
     `INSERT INTO users (
@@ -26,7 +27,7 @@ export async function populateUsersTable(data) {
     [JSON.stringify(data)]
   );
 }
-
+// reset table
 export async function resetUsersTable(data = seedData) {
   await dropUsersTable();
   await createUsersTable();
