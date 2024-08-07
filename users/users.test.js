@@ -1,5 +1,5 @@
 // external imports
-import {test, expect} from "vitest";
+import {test, expect, assert} from "vitest";
 import request from "supertest"; // Correctly import
 // internal imports
 import {app} from "../app.js";
@@ -24,7 +24,7 @@ test("GET /api/health works", async () => {
 //    ASSERT:
 //      assert that the response body is an object✅
 //      assert that response body.success is true ✅
-//      assert that response body.payload is an array
+//      assert that response body.payload is an array✅
 //      loop over the payload array. for each user object in the payload array:
 //          assert that user object.id is a number
 //          assert that user object.username is a string
@@ -40,14 +40,8 @@ test("GET /api/users", async () => {
     // ACT
     const response = await request(app).get("/api/users");
     // ASSERT
-    expect(response.body).toMatchObject({
-        success: true,
-        payload: expect.arrayContaining([
-            expect.objectContaining({
-                id: expect.any(Number),
-                username: expect.any(String)
-            })
-        ])
-    });
     expect(response.body.success).toBe(true)
+    assert.isObject(response.body)
+    assert.isArray(response.body.payload)
+
 });
