@@ -25,11 +25,11 @@ test("GET /api/health works", async () => {
 //      assert that the response body is an object✅
 //      assert that response body.success is true ✅
 //      assert that response body.payload is an array✅
-//      loop over the payload array. for each user object in the payload array:
-//          assert that user object.id is a number
-//          assert that user object.username is a string
-//      assert that the response status code is 200
-//      assert that there's a Content-Type response header which contains `application/json`
+//      loop over the payload array. for each user object in the payload array:✅
+//          assert that user object.id is a number✅
+//          assert that user object.username is a string✅
+//      assert that the response status code is 200✅
+//      assert that there's a Content-Type response header which contains `application/json`✅
 //      any other assertions that you think would be useful
 // run tests to ensure they passes
 // temporarily break the implementation in `users/users.controller.js` to ensure test fails and then change back so that tests pass
@@ -41,7 +41,15 @@ test("GET /api/users", async () => {
     const response = await request(app).get("/api/users");
     // ASSERT
     expect(response.body.success).toBe(true)
+    expect(response.status).toBe(200)
+    expect(response.header['content-type']).toEqual('application/json; charset=utf-8');
     assert.isObject(response.body)
     assert.isArray(response.body.payload)
 
+    response.body.payload.forEach(user => {
+        // Check if user.id is a number
+        expect(typeof user.id).toBe('number');
+        // Check if user.username is a string
+        expect(typeof user.username).toBe('string');
+    });
 });
