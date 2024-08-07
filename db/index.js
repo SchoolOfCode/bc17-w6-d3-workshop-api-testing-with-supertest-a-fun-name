@@ -10,4 +10,7 @@ if (undefined === databaseUrl) {
 
 export const pool = new pg.Pool({
   connectionString: databaseUrl,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
