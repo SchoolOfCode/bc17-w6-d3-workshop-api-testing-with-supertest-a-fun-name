@@ -2,7 +2,7 @@ import express from "express";
 import logger from "morgan";
 import usersRouter from "./users/users.router.js";
 
-const app = express();
+export const app = express();
 
 /**
  * Useful for logging incoming requests (in case we need to check have we even received a request).
